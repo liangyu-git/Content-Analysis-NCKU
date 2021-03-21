@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
+import matplotlib
+from sklearn.metrics import precision_recall_curve
 import sys
 
 
@@ -291,3 +293,29 @@ if __name__ == "__main__":
             print('Hard cut: ' + str(s['cut_frame']))
         else:
             print('Dissolve: ' + str(s['start_frame']) + '~' + str(s['end_frame']))
+
+    plt.figure(1)
+    plt.title('Precision/Recall Curve')
+    plt.xlabel('Recall')
+    plt.ylabel('Precision')
+    
+    y_ture = []
+    y_scores = []
+    for i in range(1380):
+        if i == (73 or 235 or 301 or 370 or 452 or 861 or 1281):
+            y_ture.append(1)
+        else:
+            y_ture.append(0)
+
+    for i in range(1380):
+        if i == (235 or 301 or 370 or 452 or 861 or 1281) or (i>=265 and i<=276):
+            y_scores.append(1)
+        else:
+            y_scores.append(0)
+    y_true = np.array(y_ture)
+    y_scores = np.array(y_scores)
+    print(y_true)
+    precision, recall, thresholds = precision_recall_curve(y_true, y_scores)
+    plt.figure(1)
+    plt.plot(precision, recall)
+    plt.show()
