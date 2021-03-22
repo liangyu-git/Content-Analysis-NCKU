@@ -83,7 +83,7 @@ class ShotBoundaryDetection:
                                               cut_l=4,
                                               cut_threshold=45,
                                               gradual_l=10,
-                                              gradual_threshold=42.5,
+                                              gradual_threshold=75,
                                               mu_threshold=2):
         def calc_phi_eta(alg_atr_l):
             def calc_sigma():
@@ -292,30 +292,4 @@ if __name__ == "__main__":
         if(s['transition'] == 'hard cut'):
             print('Hard cut: ' + str(s['cut_frame']))
         else:
-            print('Dissolve: ' + str(s['start_frame']) + '~' + str(s['end_frame']))
-
-    plt.figure(1)
-    plt.title('Precision/Recall Curve')
-    plt.xlabel('Recall')
-    plt.ylabel('Precision')
-    
-    y_ture = []
-    y_scores = []
-    for i in range(1380):
-        if i == (73 or 235 or 301 or 370 or 452 or 861 or 1281):
-            y_ture.append(1)
-        else:
-            y_ture.append(0)
-
-    for i in range(1380):
-        if i == (235 or 301 or 370 or 452 or 861 or 1281) or (i>=265 and i<=276):
-            y_scores.append(1)
-        else:
-            y_scores.append(0)
-    y_true = np.array(y_ture)
-    y_scores = np.array(y_scores)
-    print(y_true)
-    precision, recall, thresholds = precision_recall_curve(y_true, y_scores)
-    plt.figure(1)
-    plt.plot(precision, recall)
-    plt.show()
+            print('Gradual: ' + str(s['start_frame']) + '~' + str(s['end_frame']))
